@@ -46,6 +46,7 @@ import com.twilio.voice.CallInvite;
 import com.twilio.voice.LogLevel;
 import com.twilio.voice.RegistrationException;
 import com.twilio.voice.RegistrationListener;
+import com.twilio.voice.UnregistrationListener;
 import com.twilio.voice.Voice;
 
 import java.util.HashMap;
@@ -546,6 +547,17 @@ public class TwilioVoiceModule extends ReactContextBaseJavaModule implements Act
                 Log.d(TAG, "Registering with FCM");
             }
             Voice.register(getReactApplicationContext(), accessToken, Voice.RegistrationChannel.FCM, fcmToken, registrationListener);
+        }
+    }
+    
+    @ReactMethod
+    public void unregister() {
+        final String fcmToken = FirebaseInstanceId.getInstance().getToken();
+        if (fcmToken != null) {
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "Unregistering with FCM");
+            }
+            Voice.unregister(getReactApplicationContext(), accessToken, Voice.RegistrationChannel.FCM, fcmToken, unregistrationListener);
         }
     }
 
