@@ -347,4 +347,14 @@ public class CallNotificationManager {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(HANGUP_NOTIFICATION_ID);
     }
+    
+    public void removeMissCallNotification(ReactApplicationContext context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(PREFERENCE_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPrefEditor = sharedPref.edit();
+        sharedPrefEditor.clear();
+        sharedPrefEditor.commit();
+        
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+    }
 }
