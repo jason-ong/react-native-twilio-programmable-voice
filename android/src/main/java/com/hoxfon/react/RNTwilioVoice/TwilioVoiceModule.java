@@ -565,6 +565,7 @@ public class TwilioVoiceModule extends ReactContextBaseJavaModule implements Act
     public void accept() {
         callAccepted = true;
         SoundPoolManager.getInstance(getReactApplicationContext()).stopRinging();
+        callNotificationManager.removeMissCallNotification(getReactApplicationContext());
         if (activeCallInvite != null){
             if (activeCallInvite.getState() == CallInvite.State.PENDING) {
                 if (BuildConfig.DEBUG) {
@@ -595,6 +596,7 @@ public class TwilioVoiceModule extends ReactContextBaseJavaModule implements Act
     public void reject() {
         callAccepted = false;
         SoundPoolManager.getInstance(getReactApplicationContext()).stopRinging();
+        callNotificationManager.removeMissCallNotification(getReactApplicationContext());
         WritableMap params = Arguments.createMap();
         if (activeCallInvite != null){
             params.putString("call_sid",   activeCallInvite.getCallSid());
